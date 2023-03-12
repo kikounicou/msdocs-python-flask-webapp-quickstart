@@ -1,8 +1,11 @@
+from dotenv import load_dotenv
 import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 app = Flask(__name__)
 
+def configure():
+    load_dotenv()
 
 @app.route('/')
 def index():
@@ -16,9 +19,11 @@ def favicon():
 
 @app.route('/hello', methods=['POST'])
 def hello():
+   configure()
    name = request.form.get('name')
-   secret_nde = os.environ.get('SECRETNDE')
+   secret_nde = os.getenv('SECRETNDE')
    print("hello")
+   print(secret_nde)
 
    if name:
        print('Request for hello page received with name=%s' % name)
