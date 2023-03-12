@@ -7,10 +7,13 @@ app = Flask(__name__)
 def configure():
     load_dotenv()
 
+
 @app.route('/')
 def index():
    print('Request for index page received')
-   return render_template('index.html')
+   secret_nde = os.environ.get('SECRETNDE')
+   print(secret_nde)
+   return render_template('index.html', secret_nde=secret_nde)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -21,13 +24,13 @@ def favicon():
 def hello():
    configure()
    name = request.form.get('name')
-   secret_nde = os.getenv('SECRETNDE')
    print("hello")
+   secret_nde = os.environ.get('SECRETNDE')
    print(secret_nde)
 
    if name:
        print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name)
+       return render_template('hello.html', name = name, secret_nde=secret_nde)
    else:
        print('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
