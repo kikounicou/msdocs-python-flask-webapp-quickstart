@@ -18,6 +18,7 @@ def favicon():
 def hello():
    name = request.form.get('name')
    secret_nde = os.environ.get('SECRETNDE')
+   print("hello")
 
    if name:
        print('Request for hello page received with name=%s' % name)
