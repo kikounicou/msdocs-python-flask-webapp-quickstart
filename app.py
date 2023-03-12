@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
 import os
+import requests
+import json
+import azure.cognitiveservices.speech as speechsdk
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 app = Flask(__name__)
@@ -37,4 +40,4 @@ def hello():
 
 
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True)
