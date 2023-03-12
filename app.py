@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import requests
 import json
+import time
 import azure.cognitiveservices.speech as speechsdk
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
@@ -19,7 +20,7 @@ def configure():
     load_dotenv()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
    print('Request for index page received')
    secret_nde = os.environ.get('SECRETNDE')
@@ -55,7 +56,11 @@ def index():
         speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
         print("Speak into your microphone.")
+        # Début de l'enregistrement vocal
+        start_time = time.time()
         speech_recognition_result = speech_recognizer.recognize_once_async().get()
+        # Fin de la reconnaissance vocale
+        end_time = time.time()
 
         if speech_recognition_result.reason == speechsdk.ResultReason.RecognizedSpeech:
             print("Recognized: {}".format(speech_recognition_result.text))
@@ -72,6 +77,10 @@ def index():
             response = requests.post(WEBHOOK_URL, data=json.dumps(payload), headers={"Content-Type": "application/json"})
             print("Webhook response: {}".format(response.status_code))
             
+            # Durée de la reconnaissance vocale en secondes
+            duration = round(end_time - start_time, 2)
+            print("Durée de la reconnaissance vocale: {} secondes".format(duration))
+
             # ajoute la transcription dans le textarea
             return render_template('index.html', transcription=transcription)
 
@@ -91,27 +100,7 @@ def index():
 
 
 
-   return render_template('index.html', secret_nde=secret_nde)
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-@app.route('/hello', methods=['POST'])
-def hello():
-   configure()
-   name = request.form.get('name')
-   print("hello")
-   secret_nde = os.environ.get('SECRETNDE')
-   print(secret_nde)
-
-   if name:
-       print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name, secret_nde=secret_nde)
-   else:
-       print('Request for hello page received with no name or blank name -- redirecting')
-       return redirect(url_for('index'))
+   return render_template('index.html', transcription='')
 
 
 if __name__ == '__main__':
