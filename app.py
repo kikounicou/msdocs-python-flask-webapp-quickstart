@@ -26,14 +26,24 @@ def index():
    print(secret_nde)
   
    ### appel crisp
-   url = "https://api.crisp.chat/v1/website/5d62ac0f-8c10-4a47-9cb3-551838499efa/conversation/session_70c3b308-9a18-439e-87f1-961726cf9100/"
-   payload={}
+   url = "https://api.crisp.chat/v1/website/5d62ac0f-8c10-4a47-9cb3-551838499efa/conversation/session_8cba96ad-ce3b-4e1f-b501-77faa9eaa2e9/message"
+
+   payload = json.dumps({
+   "type": "note",
+   "from": "operator",
+   "origin": "chat",
+   "content": "test"
+   })
    headers = {
-    'Authorization': 'Basic {}'.format(CRISP_API),
-    'X-Crisp-Tier': 'plugin'
-    }
-   response = requests.request("GET", url, headers=headers, data=payload)
+   'Authorization': 'Basic {}'.format(CRISP_API),
+   'Content-Type': 'application/json',
+   'X-Crisp-Tier': 'plugin'
+   }
+
+   response = requests.request("POST", url, headers=headers, data=payload)
+
    print(response.text)
+   
 
    ### azure transcribe
    if request.method == 'POST':
