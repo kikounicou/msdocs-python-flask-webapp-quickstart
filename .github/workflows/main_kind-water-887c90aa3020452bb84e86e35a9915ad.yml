@@ -2,8 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - kind-water-887c90aa3020452bb84e86e35a9915ad
-
+name: Build and deploy Python app to Azure Web App - kind-water-
 on:
   push:
     branches:
@@ -60,4 +59,4 @@ jobs:
         with:
           app-name: 'kind-water-887c90aa3020452bb84e86e35a9915ad'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6C72713C3C474444A29EB5FCA0AF8517 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFI }}
