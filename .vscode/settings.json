@@ -1,4 +1,4 @@
 {
-    "appService.defaultWebAppToDeploy": "undefined/subscriptions/b93a80f9-9a17-42f6-ad3a-2ce69d17f831/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/msdocs-python-webapp-quickstart-NDE",
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/000/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/msdocs-python-webapp-quickstart-NDE",
     "appService.deploySubpath": "."
 }
